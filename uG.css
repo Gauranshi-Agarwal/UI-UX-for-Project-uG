@@ -728,7 +728,7 @@ img.upgrad-launcher-image {
 
 /* ~ UPGRAD SMO - EXACT LAYOUT */
 /* =====================================================
-   MOBILE DEVICE ONLY — BOTTOM 70% CHAT WINDOW
+   MOBILE DEVICE ONLY â€” BOTTOM 70% CHAT WINDOW
    Desktop remains completely controlled by Engati
    ===================================================== */
 
@@ -909,5 +909,132 @@ img.upgrad-launcher-image {
     max-width: 100% !important;
 
     box-sizing: border-box !important;
+  }
+}
+
+/* =====================================================
+   FINAL FIX â€” ATTACHED CALLOUT WITHOUT TEXT OVERLAP
+   Same look for desktop and mobile
+   ===================================================== */
+
+/* Desktop */
+.upgrad-launcher-button {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.upgrad-launcher-callout {
+  right: 34px !important;              /* lets icon overlap the right side */
+  top: 50% !important;
+  width: 190px !important;
+  min-width: 190px !important;
+  max-width: 190px !important;
+  min-height: 58px !important;
+
+  padding: 7px 54px 7px 16px !important; /* reserve space for icon overlap */
+  border: 1px solid #000000 !important;
+  border-radius: 14px !important;
+
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+  z-index: 1 !important;
+}
+
+.upgrad-launcher-callout.is-visible {
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+.upgrad-callout-heading {
+  margin: 0 0 4px !important;
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+}
+
+.upgrad-callout-text {
+  margin: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+}
+
+/* Mobile = same style as desktop */
+@media (max-width: 600px) {
+  .engt-launch-icon-box {
+    right: 24px !important;
+    bottom: 24px !important;
+  }
+
+  .upgrad-launcher-button {
+    flex: 0 0 70px !important;
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
+    border-radius: 18px !important;
+    z-index: 3 !important;
+  }
+
+  .engt-launch-icon-box
+  .upgrad-launcher-button
+  .upgrad-launcher-image,
+  .upgrad-launcher-button
+  img.upgrad-launcher-image {
+    width: 78% !important;
+    height: 78% !important;
+    max-width: 78% !important;
+    max-height: 78% !important;
+    margin: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .upgrad-launcher-callout {
+    right: 34px !important;
+    top: 50% !important;
+    bottom: auto !important;
+
+    width: 190px !important;
+    min-width: 190px !important;
+    max-width: 190px !important;
+    min-height: 58px !important;
+
+    padding: 7px 54px 7px 16px !important;
+    border-radius: 14px !important;
+    transform: translateY(-50%) !important;
+    z-index: 1 !important;
+  }
+
+  .upgrad-callout-heading {
+    margin: 0 0 4px !important;
+    font-size: 18px !important;
+    line-height: 1.05 !important;
+    white-space: nowrap !important;
+  }
+
+  .upgrad-callout-text {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .upgrad-launcher-callout {
+    right: 34px !important;
+    width: 182px !important;
+    min-width: 182px !important;
+    max-width: 182px !important;
+    padding: 7px 50px 7px 14px !important;
+  }
+
+  .upgrad-callout-heading {
+    font-size: 17px !important;
   }
 }
