@@ -1495,33 +1495,23 @@
  
 
   function getMappedConfig(text) {
+  const originalLabel = String(text || "").trim();
+  const normalized = normalizeText(originalLabel);
 
-    const normalized = normalizeText(text);
-
- 
-
-    const found = BUTTON_MAP.find(function (item) {
-
-      return item.matches.some(function (match) {
-
-        return normalized.includes(match);
-
-      });
-
+  const found = BUTTON_MAP.find(function (item) {
+    return item.matches.some(function (match) {
+      return normalized.includes(match);
     });
+  });
 
- 
+  return {
+    /* Always use the actual button name from the Engati path */
+    label: originalLabel,
 
-    return found || {
-
-      label: String(text || "").trim(),
-
-      icon: "programs"
-
-    };
-
-  }
-
+    /* Use mapping only to select the icon */
+    icon: found ? found.icon : "programs"
+  };
+}
  
 
   function getPromptText(smoMessage) {
