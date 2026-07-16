@@ -154,21 +154,21 @@ img.engt-avatar-icon,
   align-items: center !important;
   justify-content: center !important;
 
-  flex: 0 0 92px !important;
+  flex: 0 0 70px !important;
 
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
+  width: 70px !important;
+  min-width: 70px !important;
+  max-width: 70px !important;
 
-  height: 92px !important;
-  min-height: 92px !important;
-  max-height: 92px !important;
+  height: 70px !important;
+  min-height: 70px !important;
+  max-height: 70px !important;
 
   padding: 0 !important;
   margin: 0 !important;
 
   border: 0 !important;
-  border-radius: 24px !important;
+  border-radius: 18px !important;
 
   /*
     Black background prevents white gaps around images
@@ -221,38 +221,32 @@ img.upgrad-launcher-image {
 
   display: block !important;
 
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
+  width: 78% !important;
+  height: 78% !important;
 
-  height: 100% !important;
+  min-width: 0 !important;
+  max-width: 78% !important;
+
   min-height: 0 !important;
-  max-height: 100% !important;
+  max-height: 78% !important;
 
   padding: 0 !important;
-  margin: 0 !important;
+  margin: auto !important;
 
   border: 0 !important;
-  border-radius: inherit !important;
+  border-radius: 0 !important;
 
-  /*
-    contain prevents zooming or cropping.
-  */
   object-fit: contain !important;
-  object-position: center center !important;
+  object-position: center !important;
 
-  background: #000000 !important;
+  background: transparent !important;
 
   transform: none !important;
-  scale: 1 !important;
-
   box-shadow: none !important;
 
   pointer-events: none !important;
   box-sizing: border-box !important;
 }
-
-
 /* =====================================================
    CALLOUT
    ===================================================== */
@@ -260,10 +254,7 @@ img.upgrad-launcher-image {
 .upgrad-launcher-callout {
   position: absolute !important;
 
-  /*
-    Keep only a small portion behind the launcher.
-  */
-  right: 74px !important;
+  right: 68px !important;
   top: 50% !important;
 
   display: flex !important;
@@ -271,41 +262,19 @@ img.upgrad-launcher-image {
   align-items: flex-start !important;
   justify-content: center !important;
 
-  width: 292px !important;
-  max-width: calc(100vw - 120px) !important;
-  min-height: 94px !important;
+  width: 150px !important;
+  min-height: 50px !important;
 
-  padding: 17px 54px 17px 24px !important;
+  padding: 3px 7px 3px 11px !important;
   margin: 0 !important;
 
-  border: 3px solid #000000 !important;
-  border-radius: 26px 0 0 26px !important;
+  border: 1px solid #000000 !important;
+  border-radius: 12px 0 0 12px !important;
 
   background: #ffffff !important;
   color: #000000 !important;
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif !important;
-
-  text-align: left !important;
-
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.12) !important;
-
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-
-  transform:
-    translateY(-50%)
-    translateX(12px) !important;
-
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    visibility 0.3s ease !important;
+  transform: translateY(-50%) !important;
 
   box-sizing: border-box !important;
   z-index: 2 !important;
@@ -333,8 +302,8 @@ img.upgrad-launcher-image {
     Helvetica,
     sans-serif !important;
 
-  font-size: 23px !important;
-  line-height: 1.15 !important;
+  font-size: 18px !important;
+  line-height: 1.1 !important;
   font-weight: 700 !important;
 
   white-space: nowrap !important;
@@ -353,8 +322,8 @@ img.upgrad-launcher-image {
     Helvetica,
     sans-serif !important;
 
-  font-size: 19px !important;
-  line-height: 1.2 !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
   font-weight: 400 !important;
 
   white-space: nowrap !important;
