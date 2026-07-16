@@ -1338,462 +1338,756 @@
 /* ~ UPGRAD LAUNCHER, CALLOUT AND INACTIVITY OPENING */
 
 /* =====================================================
-
-   UPGRAD SMO - EXACT LAYOUT TRANSFORMATION
-
+   UPGRAD SMO — DYNAMIC TWO-COLUMN PILL TRANSFORMATION
    ===================================================== */
 
- 
-
 (function () {
-
   "use strict";
 
- 
-
   const ICONS = {
-
     programs: `
-
       <svg viewBox="0 0 24 24" aria-hidden="true">
-
         <path d="M3 8.5 12 4l9 4.5-9 4.5-9-4.5Z"></path>
-
         <path d="M6 10.2v4.4c0 1.8 2.7 3.4 6 3.4s6-1.6 6-3.4v-4.4"></path>
-
         <path d="M21 9v4"></path>
-
       </svg>
-
     `,
-
     eligibility: `
-
       <svg viewBox="0 0 24 24" aria-hidden="true">
-
         <path d="M12 3 20 6v6c0 4.7-3.2 7.7-8 9-4.8-1.3-8-4.3-8-9V6l8-3Z"></path>
-
         <path d="m8.5 12 2.2 2.2 4.8-5"></path>
-
       </svg>
-
     `,
-
     expert: `
-
       <svg viewBox="0 0 24 24" aria-hidden="true">
-
         <circle cx="12" cy="7" r="3.5"></circle>
-
         <path d="M5 20v-2.5c0-3.2 2.8-5.5 7-5.5s7 2.3 7 5.5V20"></path>
-
       </svg>
-
     `,
-
     ai: `
-
       <svg viewBox="0 0 24 24" aria-hidden="true">
-
         <path d="m8 3 1.2 3.2L12 7.5 9.2 8.8 8 12 6.8 8.8 4 7.5l2.8-1.3L8 3Z"></path>
-
         <path d="m17 11 1.1 2.9L21 15l-2.9 1.1L17 19l-1.1-2.9L13 15l2.9-1.1L17 11Z"></path>
-
         <path d="m5 15 .7 1.8L7.5 17.5l-1.8.7L5 20l-.7-1.8-1.8-.7 1.8-.7L5 15Z"></path>
-
       </svg>
-
     `
-
   };
 
- 
-
-  const BUTTON_MAP = [
-
+  /* This mapping selects icons only. Button labels always come from Engati. */
+  const ICON_MAP = [
     {
-
-      matches: ["explore programs", "programs", "most in demand programs"],
-
-     label: String(text || "").trim(),
-
+      matches: [
+        "explore programs",
+        "programs",
+        "most in demand programs"
+      ],
       icon: "programs"
-
     },
-
     {
-
-      matches: ["check eligibility", "eligibility", "eligibility check"],
-
-      label: String(text || "").trim(),
+      matches: [
+        "check eligibility",
+        "eligibility",
+        "eligibility check"
+      ],
       icon: "eligibility"
-
     },
-
     {
-
       matches: [
-
         "speak to a counselor",
-
         "speak to a counsellor",
-
         "speak with an expert",
-
         "speak to an expert",
-
         "counselor",
-
-        "counsellor"
-
+        "counsellor",
+        "expert"
       ],
-
-      label: String(text || "").trim(),
-
       icon: "expert"
-
     },
-
     {
-
       matches: [
-
         "i couldn’t find what i’m looking for",
-
         "i couldn't find what i'm looking for",
-
         "ai assistance",
-
         "something else",
-
         "other"
-
       ],
-
-      label: String(text || "").trim(),
-
       icon: "ai"
-
     }
-
   ];
 
- 
+  let processingScheduled = false;
 
   function normalizeText(value) {
-
     return String(value || "")
-
       .replace(/\s+/g, " ")
-
       .trim()
-
       .toLowerCase();
-
   }
 
- 
+  function getButtonConfig(text) {
+    const label = String(text || "").replace(/\s+/g, " ").trim();
+    const normalized = normalizeText(label);
 
-  function getMappedConfig(text) {
-  const originalLabel = String(text || "").trim();
-  const normalized = normalizeText(originalLabel);
-
-  const found = BUTTON_MAP.find(function (item) {
-    return item.matches.some(function (match) {
-      return normalized.includes(match);
+    const match = ICON_MAP.find(function (item) {
+      return item.matches.some(function (phrase) {
+        return normalized.includes(phrase);
+      });
     });
-  });
 
-  return {
-    /* Always use the actual button name from the Engati path */
-    label: originalLabel,
-
-    /* Use mapping only to select the icon */
-    icon: found ? found.icon : "programs"
-  };
-}
- 
+    return {
+      label: label,
+      icon: match ? match.icon : null
+    };
+  }
 
   function getPromptText(smoMessage) {
+    const directPrompt = smoMessage.querySelector(
+      ":scope > .engt-msg-text"
+    );
 
-    const textNode =
-
-      smoMessage.querySelector(":scope > .engt-msg-text") ||
-
-      smoMessage.querySelector(".engt-msg-text");
-
- 
-
-    return textNode ? textNode.innerText.trim() : "";
-
-  }
-
- 
-
-  function getButtons(smoMessage) {
-
-    return Array.from(
-
-      smoMessage.querySelectorAll("button, .engt-button, .engt-button-base")
-
-    ).filter(function (button) {
-
-      return !button.classList.contains("upgrad-smo-button");
-
-    });
-
-  }
-
- 
-
-  function buildCustomButton(originalButton) {
-
-    const originalText =
-
-      originalButton.innerText ||
-
-      originalButton.textContent ||
-
-      "";
-
- 
-
-    const config = getMappedConfig(originalText);
-
- 
-
-    const newButton = document.createElement("button");
-
-    newButton.type = "button";
-
-    newButton.className = "upgrad-smo-button";
-
- 
-
-    const icon = document.createElement("span");
-
-    icon.className = "upgrad-smo-icon";
-
-    icon.innerHTML = ICONS[config.icon] || ICONS.programs;
-
- 
-
-    const label = document.createElement("span");
-
-    label.className = "upgrad-smo-label";
-
-    label.innerHTML = config.label.replace(/\n/g, "<br>");
-
- 
-
-    newButton.appendChild(icon);
-
-    newButton.appendChild(label);
-
- 
-
-    newButton.addEventListener("click", function (event) {
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
- 
-
-      if (typeof originalButton.click === "function") {
-
-        originalButton.click();
-
-      } else {
-
-        originalButton.dispatchEvent(
-
-          new MouseEvent("click", {
-
-            bubbles: true,
-
-            cancelable: true,
-
-            view: window
-
-          })
-
-        );
-
-      }
-
-    });
-
- 
-
-    return newButton;
-
-  }
-
- 
-
-  function transformSmoMessage(smoMessage) {
-
-    if (!smoMessage || smoMessage.dataset.upgradSmoDone === "true") {
-
-      return;
-
+    if (directPrompt) {
+      return directPrompt.innerText.trim();
     }
 
- 
+    const prompt = smoMessage.querySelector(
+      ".engt-msg-text"
+    );
 
-    const buttons = getButtons(smoMessage);
+    return prompt ? prompt.innerText.trim() : "";
+  }
 
-    if (!buttons.length) return;
+  function getOriginalButtons(smoMessage) {
+    return Array.from(
+      smoMessage.querySelectorAll(
+        "button, .engt-button, .engt-button-base"
+      )
+    ).filter(function (button) {
+      return (
+        !button.classList.contains("upgrad-smo-button") &&
+        !button.closest(".upgrad-smo-original-buttons")
+      );
+    });
+  }
 
- 
+  function triggerOriginalButton(originalButton) {
+    if (!originalButton || !originalButton.isConnected) return;
+
+    originalButton.dispatchEvent(
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+    );
+  }
+
+  function buildCustomButton(originalButton) {
+    const originalText =
+      originalButton.innerText ||
+      originalButton.textContent ||
+      originalButton.getAttribute("aria-label") ||
+      "";
+
+    const config = getButtonConfig(originalText);
+
+    const customButton = document.createElement("button");
+    customButton.type = "button";
+    customButton.className = "upgrad-smo-button";
+    customButton.setAttribute("aria-label", config.label);
+
+    if (config.icon && ICONS[config.icon]) {
+      const icon = document.createElement("span");
+      icon.className = "upgrad-smo-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.innerHTML = ICONS[config.icon];
+      customButton.appendChild(icon);
+    }
+
+    const label = document.createElement("span");
+    label.className = "upgrad-smo-label";
+    label.textContent = config.label;
+    customButton.appendChild(label);
+
+    customButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      triggerOriginalButton(originalButton);
+    });
+
+    return customButton;
+  }
+
+  function transformSmoMessage(smoMessage) {
+    if (!smoMessage) return;
+
+    if (smoMessage.dataset.upgradSmoDone === "true") {
+      return;
+    }
+
+    const originalButtons = getOriginalButtons(smoMessage);
+    if (!originalButtons.length) return;
 
     const promptText = getPromptText(smoMessage);
-
-    if (!promptText) return;
-
- 
-
     const messageContainer = smoMessage.closest(".engt-msg-container");
 
     if (messageContainer) {
-
       messageContainer.classList.add("upgrad-smo-host");
-
     }
 
- 
-
     const shell = document.createElement("div");
-
     shell.className = "upgrad-smo-shell";
 
- 
-
-    const prompt = document.createElement("div");
-
-    prompt.className = "upgrad-smo-prompt";
-
-    prompt.textContent = promptText;
-
- 
+    if (promptText) {
+      const prompt = document.createElement("div");
+      prompt.className = "upgrad-smo-prompt";
+      prompt.textContent = promptText;
+      shell.appendChild(prompt);
+    }
 
     const grid = document.createElement("div");
-
     grid.className = "upgrad-smo-grid";
 
- 
-
-    buttons.forEach(function (button) {
-
-      const customButton = buildCustomButton(button);
-
-      grid.appendChild(customButton);
-
+    originalButtons.forEach(function (originalButton) {
+      grid.appendChild(buildCustomButton(originalButton));
     });
-
- 
-
-    shell.appendChild(prompt);
 
     shell.appendChild(grid);
 
- 
+    const originalButtonsHolder = document.createElement("div");
+    originalButtonsHolder.className = "upgrad-smo-original-buttons";
+    originalButtonsHolder.setAttribute("aria-hidden", "true");
 
-    /*
-
-     * Hide original buttons but keep them in DOM for click actions.
-
-     */
-
-    const hiddenButtonsHolder = document.createElement("div");
-
-    hiddenButtonsHolder.style.display = "none";
-
- 
-
-    buttons.forEach(function (button) {
-
-      hiddenButtonsHolder.appendChild(button);
-
+    originalButtons.forEach(function (originalButton) {
+      originalButtonsHolder.appendChild(originalButton);
     });
-
- 
 
     smoMessage.innerHTML = "";
-
     smoMessage.appendChild(shell);
-
-    smoMessage.appendChild(hiddenButtonsHolder);
-
- 
-
+    smoMessage.appendChild(originalButtonsHolder);
     smoMessage.classList.add("upgrad-smo-processed");
-
     smoMessage.dataset.upgradSmoDone = "true";
-
   }
 
- 
+  function processAllSmoMessages() {
+    processingScheduled = false;
 
-  function processAllSmo() {
-
-    const smoMessages = document.querySelectorAll(".engt-msg-smo");
-
-    smoMessages.forEach(transformSmoMessage);
-
+    document
+      .querySelectorAll(".engt-msg-smo")
+      .forEach(transformSmoMessage);
   }
 
- 
+  function scheduleSmoProcessing() {
+    if (processingScheduled) return;
+
+    processingScheduled = true;
+    window.requestAnimationFrame(processAllSmoMessages);
+  }
 
   const observer = new MutationObserver(function (mutations) {
-
-    const foundRelevant = mutations.some(function (mutation) {
-
+    const hasRelevantChanges = mutations.some(function (mutation) {
       return Array.from(mutation.addedNodes).some(function (node) {
-
         if (node.nodeType !== 1) return false;
 
- 
-
-        return (
-
-          node.matches?.(".engt-msg-smo") ||
-
-          node.querySelector?.(".engt-msg-smo")
-
+        return Boolean(
+          node.matches?.(
+            ".engt-msg-smo, button, .engt-button, .engt-button-base"
+          ) ||
+          node.querySelector?.(
+            ".engt-msg-smo, button, .engt-button, .engt-button-base"
+          ) ||
+          node.closest?.(".engt-msg-smo")
         );
-
       });
-
     });
 
- 
-
-    if (foundRelevant) {
-
-      processAllSmo();
-
+    if (hasRelevantChanges) {
+      scheduleSmoProcessing();
     }
-
   });
 
- 
+  function initializeSmoTransformation() {
+    processAllSmoMessages();
 
-  observer.observe(document.body, {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
 
-    childList: true,
-
-    subtree: true
-
-  });
-
- 
-
-  processAllSmo();
-
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeSmoTransformation,
+      { once: true }
+    );
+  } else {
+    initializeSmoTransformation();
+  }
 })();
 
- 
+/* ~ UPGRAD SMO — DYNAMIC TWO-COLUMN PILL TRANSFORMATION */
+/* =====================================================
+   EXIT INTENT - OPEN CHATBOT EVERY TIME
+   Desktop only
+   ===================================================== */
 
-/* ~ UPGRAD SMO - EXACT LAYOUT TRANSFORMATION */
+(function () {
+  "use strict";
+
+  let exitIntentArmed = true;
+
+  function isMobileDevice() {
+    return window.matchMedia(
+      "(hover: none), (pointer: coarse)"
+    ).matches;
+  }
+
+  function isVisible(element) {
+    if (!element || !element.isConnected) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      Number(style.opacity || 1) > 0 &&
+      rect.width > 0 &&
+      rect.height > 0
+    );
+  }
+
+  function isChatOpen() {
+    const closeButton =
+      document.getElementById("engtClose") ||
+      document.querySelector(".engt-close") ||
+      document.querySelector(".engt-close-button") ||
+      document.querySelector("[aria-label='Close']") ||
+      document.querySelector("[aria-label='Minimize']") ||
+      document.querySelector("[title='Close']") ||
+      document.querySelector("[title='Minimize']");
+
+    return isVisible(closeButton);
+  }
+
+  function getLauncherButton() {
+    return (
+      document.querySelector(".upgrad-launcher-button") ||
+      document.getElementById("upgradLauncherButton") ||
+      document.getElementById("engtLauncherIcon") ||
+      document.querySelector(".engt-launcher-icon")
+    );
+  }
+
+  function openChatbot() {
+    if (isChatOpen()) {
+      return;
+    }
+
+    const launcherButton = getLauncherButton();
+
+    if (!launcherButton) {
+      console.warn("Chatbot launcher was not found.");
+      return;
+    }
+
+    if (typeof launcherButton.click === "function") {
+      launcherButton.click();
+      return;
+    }
+
+    launcherButton.dispatchEvent(
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      })
+    );
+  }
+
+  function handleExitIntent(event) {
+    /*
+     * Desktop only.
+     */
+    if (isMobileDevice()) {
+      return;
+    }
+
+    /*
+     * Ignore movement between elements inside the page.
+     */
+    if (event.relatedTarget || event.toElement) {
+      return;
+    }
+
+    /*
+     * Trigger only when the cursor exits through the top edge.
+     */
+    if (event.clientY > 10) {
+      return;
+    }
+
+    /*
+     * Wait until the cursor has returned before allowing
+     * another exit-intent trigger.
+     */
+    if (!exitIntentArmed) {
+      return;
+    }
+
+    exitIntentArmed = false;
+
+    if (!isChatOpen()) {
+      openChatbot();
+    }
+  }
+
+  function rearmExitIntent() {
+    /*
+     * Rearm every time the cursor returns to the page.
+     */
+    exitIntentArmed = true;
+  }
+
+  document.addEventListener(
+    "mouseout",
+    handleExitIntent,
+    true
+  );
+
+  document.addEventListener(
+    "mouseenter",
+    rearmExitIntent,
+    true
+  );
+
+  window.addEventListener(
+    "focus",
+    rearmExitIntent
+  );
+})();
+
+/* ~ EXIT INTENT - OPEN CHATBOT EVERY TIME */
+/* =====================================================
+   CAROUSEL HOVER - SLIDE EXACTLY ONE CARD
+   Direct track movement, no button triggering
+   Desktop only
+   ===================================================== */
+
+(function () {
+  "use strict";
+
+  const HOVER_DELAY = 350;
+  const SLIDE_LOCK_TIME = 550;
+
+  let hoverTimer = 0;
+  let slideLocked = false;
+  let activeCard = null;
+
+  function isDesktopHoverDevice() {
+    return window.matchMedia(
+      "(hover: hover) and (pointer: fine)"
+    ).matches;
+  }
+
+  function isVisible(element) {
+    if (!element || !element.isConnected) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      Number(style.opacity || 1) > 0 &&
+      rect.width > 0 &&
+      rect.height > 0
+    );
+  }
+
+  function getHoveredCard(target) {
+    if (!(target instanceof Element)) {
+      return null;
+    }
+
+    return target.closest(
+      ".engt-carousel-wrapper .engt-card, " +
+      ".engt-msg-carousel .engt-card, " +
+      ".engt-carousel .engt-card, " +
+      ".engt-carousel-wrapper .engt-carousel-card, " +
+      ".engt-msg-carousel .engt-carousel-card"
+    );
+  }
+
+  function getCarouselRoot(card) {
+    return card.closest(
+      ".engt-carousel-wrapper, " +
+      ".engt-msg-carousel, " +
+      ".engt-carousel"
+    );
+  }
+
+  function canScrollHorizontally(element) {
+    if (!element) {
+      return false;
+    }
+
+    return element.scrollWidth > element.clientWidth + 5;
+  }
+
+  function findScrollableTrack(card, carouselRoot) {
+    let current = card.parentElement;
+
+    while (current) {
+      if (canScrollHorizontally(current)) {
+        return current;
+      }
+
+      if (current === carouselRoot) {
+        break;
+      }
+
+      current = current.parentElement;
+    }
+
+    if (canScrollHorizontally(carouselRoot)) {
+      return carouselRoot;
+    }
+
+    /*
+     * Some Engati carousels place the scrolling track
+     * inside another child wrapper.
+     */
+    const possibleTracks = Array.from(
+      carouselRoot.querySelectorAll("div")
+    ).filter(function (element) {
+      return (
+        element.contains(card) &&
+        canScrollHorizontally(element)
+      );
+    });
+
+    if (!possibleTracks.length) {
+      return null;
+    }
+
+    /*
+     * Use the smallest scrollable wrapper containing the card.
+     */
+    possibleTracks.sort(function (a, b) {
+      return a.scrollWidth - b.scrollWidth;
+    });
+
+    return possibleTracks[0];
+  }
+
+  function getVisibleCards(track) {
+    return Array.from(
+      track.querySelectorAll(
+        ".engt-card, .engt-carousel-card"
+      )
+    ).filter(function (card) {
+      return isVisible(card);
+    });
+  }
+
+  function getCardStep(track, hoveredCard) {
+    const cards = getVisibleCards(track);
+
+    if (cards.length >= 2) {
+      const firstRect = cards[0].getBoundingClientRect();
+      const secondRect = cards[1].getBoundingClientRect();
+
+      const measuredStep = Math.abs(
+        secondRect.left - firstRect.left
+      );
+
+      if (measuredStep > 20) {
+        return measuredStep;
+      }
+    }
+
+    const cardRect = hoveredCard.getBoundingClientRect();
+    const cardStyle = window.getComputedStyle(hoveredCard);
+
+    const marginLeft =
+      parseFloat(cardStyle.marginLeft) || 0;
+
+    const marginRight =
+      parseFloat(cardStyle.marginRight) || 0;
+
+    return (
+      cardRect.width +
+      marginLeft +
+      marginRight
+    );
+  }
+
+  function getSlideDirection(card, track) {
+    const cardRect = card.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+
+    const cardCenter =
+      cardRect.left + cardRect.width / 2;
+
+    const visibleTrackCenter =
+      trackRect.left + trackRect.width / 2;
+
+    const tolerance = Math.min(
+      30,
+      cardRect.width * 0.12
+    );
+
+    if (cardCenter > visibleTrackCenter + tolerance) {
+      return 1;
+    }
+
+    if (cardCenter < visibleTrackCenter - tolerance) {
+      return -1;
+    }
+
+    return 0;
+  }
+
+  function slideOneCard(card) {
+    if (slideLocked) {
+      return;
+    }
+
+    const carouselRoot = getCarouselRoot(card);
+
+    if (!carouselRoot) {
+      return;
+    }
+
+    const track = findScrollableTrack(
+      card,
+      carouselRoot
+    );
+
+    if (!track) {
+      console.warn(
+        "Scrollable carousel track was not found."
+      );
+      return;
+    }
+
+    const direction = getSlideDirection(
+      card,
+      track
+    );
+
+    /*
+     * The card is already in the main/center position.
+     */
+    if (direction === 0) {
+      return;
+    }
+
+    const cardStep = getCardStep(
+      track,
+      card
+    );
+
+    const maximumScroll =
+      track.scrollWidth - track.clientWidth;
+
+    const targetScroll = Math.max(
+      0,
+      Math.min(
+        maximumScroll,
+        track.scrollLeft +
+          direction * cardStep
+      )
+    );
+
+    /*
+     * Do nothing when already at the first or last card.
+     */
+    if (
+      Math.abs(targetScroll - track.scrollLeft) < 2
+    ) {
+      return;
+    }
+
+    slideLocked = true;
+
+    track.scrollTo({
+      left: targetScroll,
+      behavior: "smooth"
+    });
+
+    window.setTimeout(function () {
+      slideLocked = false;
+    }, SLIDE_LOCK_TIME);
+  }
+
+  document.addEventListener(
+    "mouseover",
+    function (event) {
+      if (!isDesktopHoverDevice()) {
+        return;
+      }
+
+      const card = getHoveredCard(event.target);
+
+      if (!card) {
+        return;
+      }
+
+      /*
+       * Ignore movement between children inside the same card.
+       */
+      if (
+        event.relatedTarget instanceof Node &&
+        card.contains(event.relatedTarget)
+      ) {
+        return;
+      }
+
+      activeCard = card;
+      window.clearTimeout(hoverTimer);
+
+      hoverTimer = window.setTimeout(function () {
+        if (activeCard === card) {
+          slideOneCard(card);
+        }
+      }, HOVER_DELAY);
+    },
+    true
+  );
+
+  document.addEventListener(
+    "mouseout",
+    function (event) {
+      const card = getHoveredCard(event.target);
+
+      if (!card) {
+        return;
+      }
+
+      /*
+       * Do not cancel when moving between elements
+       * inside the same card.
+       */
+      if (
+        event.relatedTarget instanceof Node &&
+        card.contains(event.relatedTarget)
+      ) {
+        return;
+      }
+
+      if (activeCard === card) {
+        activeCard = null;
+        window.clearTimeout(hoverTimer);
+      }
+    },
+    true
+  );
+})();
+
+/* ~ CAROUSEL HOVER - SLIDE EXACTLY ONE CARD */
