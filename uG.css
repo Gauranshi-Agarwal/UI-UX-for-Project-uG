@@ -1504,3 +1504,236 @@ img.upgrad-launcher-image {
       0 6px 16px rgba(0, 0, 0, 0.15) !important;
   }
 }
+/* =====================================================
+   MOBILE-ONLY LAUNCHER LOOK
+   Uses the complete uploaded mobile image
+   Desktop remains unchanged
+   ===================================================== */
+
+@media only screen and (max-width: 600px) {
+
+  .engt-launch-icon-box {
+    right: 14px !important;
+    bottom: 18px !important;
+  }
+
+  /*
+    The uploaded mobile asset already contains:
+    - Chat with us text
+    - black icon
+    - speech bubble artwork
+
+    Therefore the custom callout created by JavaScript
+    must be hidden on mobile.
+  */
+  .upgrad-launcher-callout {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /*
+    Make the launcher large enough to display the full
+    vertical mobile artwork without cropping.
+  */
+  .upgrad-launcher-button {
+    display: block !important;
+
+    flex: 0 0 116px !important;
+
+    width: 116px !important;
+    min-width: 116px !important;
+    max-width: 116px !important;
+
+    height: 116px !important;
+    min-height: 116px !important;
+    max-height: 116px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    box-shadow: none !important;
+
+    overflow: visible !important;
+  }
+
+  .engt-launch-icon-box
+  .upgrad-launcher-button
+  .upgrad-launcher-image.upgrad-mobile-launcher-image,
+  .upgrad-launcher-button
+  img.upgrad-mobile-launcher-image {
+    display: block !important;
+
+    width: 116px !important;
+    min-width: 116px !important;
+    max-width: 116px !important;
+
+    height: 116px !important;
+    min-height: 116px !important;
+    max-height: 116px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    object-fit: contain !important;
+    object-position: center bottom !important;
+
+    background: transparent !important;
+
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Smaller mobile screens */
+@media only screen and (max-width: 360px) {
+
+  .upgrad-launcher-button {
+    flex-basis: 104px !important;
+
+    width: 104px !important;
+    min-width: 104px !important;
+    max-width: 104px !important;
+
+    height: 104px !important;
+    min-height: 104px !important;
+    max-height: 104px !important;
+  }
+
+  .engt-launch-icon-box
+  .upgrad-launcher-button
+  .upgrad-launcher-image.upgrad-mobile-launcher-image,
+  .upgrad-launcher-button
+  img.upgrad-mobile-launcher-image {
+    width: 104px !important;
+    min-width: 104px !important;
+    max-width: 104px !important;
+
+    height: 104px !important;
+    min-height: 104px !important;
+    max-height: 104px !important;
+  }
+}
+/* =====================================================
+   MOBILE LAUNCHER SIZE REDUCTION
+   Desktop remains unchanged
+   ===================================================== */
+
+@media only screen and (max-width: 600px) {
+  .upgrad-launcher-button {
+    flex: 0 0 82px !important;
+
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+
+    height: 82px !important;
+    min-height: 82px !important;
+    max-height: 82px !important;
+  }
+
+  .engt-launch-icon-box
+  .upgrad-launcher-button
+  .upgrad-launcher-image.upgrad-mobile-launcher-image,
+  .upgrad-launcher-button
+  img.upgrad-mobile-launcher-image {
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+
+    height: 82px !important;
+    min-height: 82px !important;
+    max-height: 82px !important;
+
+    object-fit: contain !important;
+  }
+
+  .engt-launch-icon-box {
+    right: 14px !important;
+    bottom: 16px !important;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .upgrad-launcher-button {
+    flex-basis: 74px !important;
+
+    width: 74px !important;
+    min-width: 74px !important;
+    max-width: 74px !important;
+
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+  }
+
+  .engt-launch-icon-box
+  .upgrad-launcher-button
+  .upgrad-launcher-image.upgrad-mobile-launcher-image,
+  .upgrad-launcher-button
+  img.upgrad-mobile-launcher-image {
+    width: 74px !important;
+    min-width: 74px !important;
+    max-width: 74px !important;
+
+    height: 74px !important;
+    min-height: 74px !important;
+    max-height: 74px !important;
+  }
+}
+/* =====================================================
+   HEADER - REDUCE GAP AFTER LOGO
+   ===================================================== */
+
+.engt-header {
+  gap: 0 !important;
+  justify-content: flex-start !important;
+}
+
+/* Logo section */
+.engt-header-img-section {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+
+  margin: 0 4px 0 0 !important;
+  padding: 0 !important;
+}
+
+/* Title section */
+.engt-header-info {
+  flex: 0 1 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: left !important;
+}
+
+/* Bot name */
+.engt-header-info-title,
+#engtChatScreenHeader {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+/* Keep close button on the far right */
+#engtHeaderOptionsCHAT,
+.engt-header-options {
+  margin-left: auto !important;
+}
