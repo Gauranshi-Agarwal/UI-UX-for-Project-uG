@@ -1415,7 +1415,7 @@
 
       matches: ["explore programs", "programs", "most in demand programs"],
 
-      label: "Most in Demand\nPrograms",
+     label: String(text || "").trim(),
 
       icon: "programs"
 
@@ -1425,8 +1425,7 @@
 
       matches: ["check eligibility", "eligibility", "eligibility check"],
 
-      label: "Eligibility Check",
-
+      label: String(text || "").trim(),
       icon: "eligibility"
 
     },
@@ -1449,7 +1448,7 @@
 
       ],
 
-      label: "Speak with an Expert",
+      label: String(text || "").trim(),
 
       icon: "expert"
 
@@ -1471,7 +1470,7 @@
 
       ],
 
-      label: "AI Assistance",
+      label: String(text || "").trim(),
 
       icon: "ai"
 
