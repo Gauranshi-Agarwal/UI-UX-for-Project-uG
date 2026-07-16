@@ -2091,3 +2091,81 @@
 })();
 
 /* ~ CAROUSEL HOVER - SLIDE EXACTLY ONE CARD */
+/* =====================================================
+   MOBILE-ONLY LAUNCHER IMAGE
+   Desktop launcher remains unchanged
+   ===================================================== */
+
+(function () {
+  "use strict";
+
+  const MOBILE_IMAGE_URL =
+    "https://fpu.branding-element.com/prod/88870/ENGATI_PUBLIC/147645_16072026_051439_Chatbot_Logo_Chatbot_launch_icon_logo__M__01.png-rRe65.png";
+
+  const mobileQuery = window.matchMedia(
+    "(max-width: 600px)"
+  );
+
+  function updateMobileLauncherImage() {
+    const launcherImage =
+      document.querySelector(
+        ".upgrad-launcher-image"
+      );
+
+    if (!launcherImage) {
+      return;
+    }
+
+    /*
+     * Save the original desktop image once.
+     */
+    if (!launcherImage.dataset.desktopSrc) {
+      launcherImage.dataset.desktopSrc =
+        launcherImage.getAttribute("src") || "";
+    }
+
+    if (mobileQuery.matches) {
+      launcherImage.setAttribute(
+        "src",
+        MOBILE_IMAGE_URL
+      );
+
+      launcherImage.classList.add(
+        "upgrad-mobile-launcher-image"
+      );
+    } else {
+      launcherImage.setAttribute(
+        "src",
+        launcherImage.dataset.desktopSrc
+      );
+
+      launcherImage.classList.remove(
+        "upgrad-mobile-launcher-image"
+      );
+    }
+  }
+
+  const observer = new MutationObserver(function () {
+    updateMobileLauncherImage();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  if (typeof mobileQuery.addEventListener === "function") {
+    mobileQuery.addEventListener(
+      "change",
+      updateMobileLauncherImage
+    );
+  } else {
+    mobileQuery.addListener(
+      updateMobileLauncherImage
+    );
+  }
+
+  updateMobileLauncherImage();
+})();
+
+/* ~ MOBILE-ONLY LAUNCHER IMAGE */
