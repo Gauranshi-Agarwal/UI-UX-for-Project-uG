@@ -610,133 +610,144 @@ img.upgrad-launcher-image {
   }
 }
 /* =====================================================
-   UPGRAD SMO - EXACT LAYOUT
+   UPGRAD SMO â€” COMPACT TWO-COLUMN PILL BUTTONS
    ===================================================== */
 
-/* Reset Engati default SMO bubble */
+/* Reset only transformed SMO messages. */
 .engt-msg.engt-msg-smo.upgrad-smo-processed {
-  width: auto !important;
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
   max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
   border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  box-sizing: border-box !important;
 }
 
-/* Keep only one avatar alignment */
+/* Let the SMO content use the available row width beside the avatar. */
 .engt-msg-container.upgrad-smo-host {
   align-items: flex-start !important;
 }
 
-/* Main custom wrapper */
+.engt-msg-container.upgrad-smo-host
+> :not(.upgrad-bot-avatar):not(.engt-avatar-wrapper) {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
 .upgrad-smo-shell {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
+  display: block !important;
   width: 100% !important;
-  max-width: 560px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   box-sizing: border-box !important;
 }
 
-/* Prompt bubble */
+/* Prompt remains a normal chat bubble above the buttons. */
 .upgrad-smo-prompt {
-  display: inline-block !important;
-  width: auto !important;
-  max-width: 100% !important;
-
-  margin: 0 0 12px 0 !important;
-  padding: 14px 16px !important;
-
-  background: #f1f1f1 !important;
+  display: block !important;
+  width: fit-content !important;
+  min-width: 0 !important;
+  max-width: 82% !important;
+  margin: 0 0 14px 0 !important;
+  padding: 13px 16px !important;
+  background: #f3f3f3 !important;
+  color: #111111 !important;
   border: 0 !important;
   border-radius: 18px !important;
   box-shadow: none !important;
-
-  color: #000000 !important;
+  font-family: inherit !important;
   font-size: 14px !important;
   font-weight: 400 !important;
   line-height: 1.4 !important;
   text-align: left !important;
   white-space: pre-wrap !important;
-
+  overflow-wrap: anywhere !important;
   box-sizing: border-box !important;
 }
 
-/* Grid for SMO buttons */
+/* Always arrange SMO choices in two equal columns. */
 .upgrad-smo-grid {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 12px !important;
-
+  gap: 12px 14px !important;
   width: 100% !important;
+  min-width: 0 !important;
   max-width: 100% !important;
-
   margin: 0 !important;
   padding: 0 !important;
   box-sizing: border-box !important;
 }
 
-/* Individual SMO buttons */
+/* Compact white pill button matching the reference. */
 .upgrad-smo-button {
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 10px !important;
-
+  gap: 12px !important;
   width: 100% !important;
-  min-height: 74px !important;
-
+  min-width: 0 !important;
+  max-width: 100% !important;
+  min-height: 58px !important;
+  height: auto !important;
   margin: 0 !important;
-  padding: 14px 16px !important;
-
+  padding: 10px 18px !important;
   background: #ffffff !important;
-  border: 1.5px solid #e2e2e2 !important;
-  border-radius: 16px !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
-
-  color: #000000 !important;
+  color: #111111 !important;
+  border: 1.5px solid #dddddd !important;
+  border-radius: 999px !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  font-family: inherit !important;
   text-align: left !important;
-
   cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  transform: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease !important;
   box-sizing: border-box !important;
-  transition: all 0.2s ease !important;
 }
 
 .upgrad-smo-button:hover,
 .upgrad-smo-button:focus-visible {
-  background: #000000 !important;
-  color: #ffffff !important;
-  border-color: #000000 !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #c8c8c8 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
   outline: none !important;
   transform: translateY(-1px) !important;
+}
+
+.upgrad-smo-button:active {
+  transform: translateY(0) !important;
 }
 
 .upgrad-smo-icon {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-
-  flex: 0 0 22px !important;
-  width: 22px !important;
-  min-width: 22px !important;
-  height: 22px !important;
-
-  color: #000000 !important;
-}
-
-.upgrad-smo-button:hover .upgrad-smo-icon,
-.upgrad-smo-button:focus-visible .upgrad-smo-icon {
-  color: #ffffff !important;
+  flex: 0 0 25px !important;
+  width: 25px !important;
+  min-width: 25px !important;
+  height: 25px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #111111 !important;
+  box-sizing: border-box !important;
 }
 
 .upgrad-smo-icon svg {
-  width: 22px !important;
-  height: 22px !important;
   display: block !important;
-
+  width: 25px !important;
+  height: 25px !important;
   fill: none !important;
   stroke: currentColor !important;
   stroke-width: 1.8 !important;
@@ -747,82 +758,78 @@ img.upgrad-launcher-image {
 .upgrad-smo-label {
   display: block !important;
   flex: 1 1 auto !important;
-
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
   color: inherit !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
   line-height: 1.25 !important;
   text-align: left !important;
   white-space: normal !important;
-  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
 }
 
-/* Hide leftover default direct text after rebuild */
-.engt-msg.engt-msg-smo.upgrad-smo-processed > .engt-msg-text,
-.engt-msg.engt-msg-smo.upgrad-smo-processed > span.engt-msg-text {
+/* Original Engati controls stay in the DOM for their click handlers. */
+.upgrad-smo-original-buttons {
   display: none !important;
 }
 
-/* Remove default button styling if original button classes remain */
-.upgrad-smo-button.engt-button,
-.upgrad-smo-button.engt-button-base {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border: 1.5px solid #e2e2e2 !important;
-  border-radius: 16px !important;
+/* Remove any leftover direct prompt node after rebuilding. */
+.engt-msg.engt-msg-smo.upgrad-smo-processed
+> .engt-msg-text {
+  display: none !important;
 }
 
-/* Mobile */
 @media (max-width: 600px) {
-  .upgrad-smo-shell {
-    max-width: 100% !important;
-  }
-
   .upgrad-smo-prompt {
-    font-size: 13px !important;
-    padding: 12px 14px !important;
+    max-width: 90% !important;
+    margin-bottom: 11px !important;
+    padding: 11px 13px !important;
     border-radius: 16px !important;
-    margin-bottom: 10px !important;
+    font-size: 13px !important;
   }
 
   .upgrad-smo-grid {
-    gap: 10px !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 9px !important;
   }
 
   .upgrad-smo-button {
-    min-height: 66px !important;
-    padding: 12px 12px !important;
-    border-radius: 14px !important;
+    min-height: 54px !important;
+    padding: 9px 12px !important;
+    gap: 8px !important;
+  }
+
+  .upgrad-smo-icon {
+    flex-basis: 21px !important;
+    width: 21px !important;
+    min-width: 21px !important;
+    height: 21px !important;
+  }
+
+  .upgrad-smo-icon svg {
+    width: 21px !important;
+    height: 21px !important;
   }
 
   .upgrad-smo-label {
     font-size: 12px !important;
     line-height: 1.2 !important;
   }
-
-  .upgrad-smo-icon {
-    width: 20px !important;
-    min-width: 20px !important;
-    height: 20px !important;
-    flex-basis: 20px !important;
-  }
-
-  .upgrad-smo-icon svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
 }
 
-/* If screen is too narrow, stack buttons */
+/* Only very narrow devices fall back to one column. */
 @media (max-width: 340px) {
   .upgrad-smo-grid {
     grid-template-columns: 1fr !important;
   }
 }
 
-/* ~ UPGRAD SMO - EXACT LAYOUT */
 /* =====================================================
-   MOBILE DEVICE ONLY â€” BOTTOM 70% CHAT WINDOW
+   MOBILE DEVICE ONLY Ã¢â‚¬â€ BOTTOM 70% CHAT WINDOW
    Desktop remains completely controlled by Engati
    ===================================================== */
 
@@ -1007,7 +1014,7 @@ img.upgrad-launcher-image {
 }
 
 /* =====================================================
-   FINAL FIX â€” ATTACHED CALLOUT WITHOUT TEXT OVERLAP
+   FINAL FIX Ã¢â‚¬â€ ATTACHED CALLOUT WITHOUT TEXT OVERLAP
    Same look for desktop and mobile
    ===================================================== */
 
@@ -1133,7 +1140,7 @@ img.upgrad-launcher-image {
   }
 }
 /* =====================================================
-   HEADER TITLE â€” PLACE DIRECTLY AFTER LOGO
+   HEADER TITLE Ã¢â‚¬â€ PLACE DIRECTLY AFTER LOGO
    ===================================================== */
 
 .engt-header,
@@ -1273,5 +1280,227 @@ img.upgrad-launcher-image {
   .engt-msg-container.upgrad-bot-message
   .engt-msg-text {
     max-width: 82% !important;
+  }
+}
+/* =====================================================
+   FINAL SMO BUTTON SHAPE FIX
+   Horizontal elongated, equal-size buttons
+   ===================================================== */
+
+.upgrad-smo-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Fixed horizontal pill */
+.upgrad-smo-button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+
+  margin: 0 !important;
+  padding: 10px 18px !important;
+
+  background: #ffffff !important;
+  color: #111111 !important;
+
+  border: 1.5px solid #dddddd !important;
+  border-radius: 36px !important;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Keep icon fixed */
+.upgrad-smo-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex: 0 0 28px !important;
+
+  width: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+}
+
+.upgrad-smo-icon svg {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* Prevent text from becoming narrow vertical columns */
+.upgrad-smo-label {
+  display: block !important;
+  flex: 1 1 auto !important;
+
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+
+  text-align: left !important;
+
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  hyphens: none !important;
+
+  overflow: hidden !important;
+}
+
+/* Keep hover shape unchanged */
+.upgrad-smo-button:hover,
+.upgrad-smo-button:focus,
+.upgrad-smo-button:focus-visible {
+  height: 72px !important;
+  min-height: 72px !important;
+  max-height: 72px !important;
+
+  border-radius: 36px !important;
+
+  background: #ffffff !important;
+  color: #111111 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Mobile sizing */
+@media (max-width: 600px) {
+  .upgrad-smo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  .upgrad-smo-button {
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+
+    padding: 8px 12px !important;
+    gap: 9px !important;
+
+    border-radius: 32px !important;
+  }
+
+  .upgrad-smo-icon {
+    flex-basis: 22px !important;
+
+    width: 22px !important;
+    min-width: 22px !important;
+    max-width: 22px !important;
+
+    height: 22px !important;
+    min-height: 22px !important;
+    max-height: 22px !important;
+  }
+
+  .upgrad-smo-icon svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .upgrad-smo-label {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+  }
+
+  .upgrad-smo-button:hover,
+  .upgrad-smo-button:focus,
+  .upgrad-smo-button:focus-visible {
+    height: 64px !important;
+    min-height: 64px !important;
+    max-height: 64px !important;
+
+    border-radius: 32px !important;
+  }
+}
+/* =====================================================
+   CAROUSEL CARD HOVER HIGHLIGHT
+   ===================================================== */
+
+/* Default carousel card state */
+.engt-carousel-wrapper .engt-card,
+.engt-msg-carousel .engt-card,
+.engt-carousel .engt-card,
+[class*="carousel"] .engt-card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease !important;
+
+  transform-origin: center center !important;
+}
+
+/* Highlight the card being hovered */
+.engt-carousel-wrapper .engt-card:hover,
+.engt-msg-carousel .engt-card:hover,
+.engt-carousel .engt-card:hover,
+[class*="carousel"] .engt-card:hover {
+  transform: translateY(-4px) scale(1.025) !important;
+
+  border-color: #000000 !important;
+  background-color: #ffffff !important;
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18) !important;
+
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+/* Slightly dim the other cards while one card is hovered */
+.engt-carousel-wrapper:has(.engt-card:hover) .engt-card:not(:hover),
+.engt-msg-carousel:has(.engt-card:hover) .engt-card:not(:hover),
+.engt-carousel:has(.engt-card:hover) .engt-card:not(:hover),
+[class*="carousel"]:has(.engt-card:hover) .engt-card:not(:hover) {
+  opacity: 0.72 !important;
+  transform: scale(0.98) !important;
+}
+
+/* Keep content sharp and readable */
+.engt-carousel-wrapper .engt-card:hover img,
+.engt-msg-carousel .engt-card:hover img,
+.engt-carousel .engt-card:hover img,
+[class*="carousel"] .engt-card:hover img {
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Mobile touch feedback */
+@media (max-width: 600px) {
+  .engt-carousel-wrapper .engt-card:active,
+  .engt-msg-carousel .engt-card:active,
+  .engt-carousel .engt-card:active,
+  [class*="carousel"] .engt-card:active {
+    transform: scale(0.99) !important;
+    border-color: #000000 !important;
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.15) !important;
   }
 }
