@@ -391,8 +391,9 @@ img.upgrad-launcher-image {
     bottom: 18px !important;
   }
 
+  /* Existing mobile icon */
   .upgrad-launcher-button {
-    flex-basis: 76px !important;
+    flex: 0 0 76px !important;
 
     width: 76px !important;
     min-width: 76px !important;
@@ -402,32 +403,99 @@ img.upgrad-launcher-image {
     min-height: 76px !important;
     max-height: 76px !important;
 
+    padding: 0 !important;
+    margin: 0 !important;
+
     border-radius: 20px !important;
+
+    z-index: 3 !important;
   }
 
+  /* Callout attached above the icon */
   .upgrad-launcher-callout {
-    right: 60px !important;
+    position: absolute !important;
 
-    width: min(230px, calc(100vw - 90px)) !important;
-    max-width: calc(100vw - 90px) !important;
-    min-height: 74px !important;
+    right: 0 !important;
+    left: auto !important;
+    top: auto !important;
+    bottom: 76px !important;
 
-    padding:
-      12px
-      42px
-      12px
-      16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
 
-    border-width: 2px !important;
-    border-radius: 20px 0 0 20px !important;
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
+
+    height: 48px !important;
+    min-height: 48px !important;
+    max-height: 48px !important;
+
+    padding: 1px 2px 1px !important;
+    margin: 0 !important;
+
+    border: 0 !important;
+    border-radius: 20px 20px 0 0 !important;
+
+    background: #000000 !important;
+    color: #000000 !important;
+
+    box-shadow: none !important;
+
+    transform: none !important;
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    z-index: 4 !important;
   }
 
+  .upgrad-launcher-callout.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* White heading section */
   .upgrad-callout-heading {
-    font-size: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    height: 30px !important;
+    min-height: 30px !important;
+
+    margin: 0 !important;
+    padding: 4px 3px !important;
+
+    background: #ffffff !important;
+    color: #000000 !important;
+
+    border: 0 !important;
+    border-radius: 16px 16px 0 0 !important;
+
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    font-weight: 700 !important;
+
+    text-align: center !important;
+    white-space: nowrap !important;
+
+    overflow: hidden !important;
+    box-sizing: border-box !important;
   }
 
+  /* Hide second line on mobile */
   .upgrad-callout-text {
-    font-size: 15px !important;
+    display: none !important;
+    visibility: hidden !important;
   }
 }
 
@@ -435,22 +503,19 @@ img.upgrad-launcher-image {
 /* Very narrow mobile screens */
 @media (max-width: 360px) {
   .upgrad-launcher-callout {
-    right: 56px !important;
+    bottom: 58px !important;
 
-    width: calc(100vw - 78px) !important;
-    max-width: calc(100vw - 78px) !important;
-
-    padding-right: 38px !important;
+    width: 76px !important;
+    min-width: 76px !important;
+    max-width: 76px !important;
   }
 
   .upgrad-callout-heading {
-    font-size: 16px !important;
+    font-size: 10px !important;
+    padding: 4px 2px !important;
   }
-
-  .upgrad-callout-text {
-    font-size: 14px !important;
-  }
-}/* =====================================================
+}
+/* =====================================================
    UPGRAD SMO - EXACT LAYOUT
    ===================================================== */
 
