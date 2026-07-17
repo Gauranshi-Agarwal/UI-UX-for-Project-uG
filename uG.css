@@ -1080,7 +1080,7 @@ img.upgrad-launcher-image {
 .engt-msg-carousel .engt-card:hover,
 .engt-carousel .engt-card:hover,
 [class*="carousel"] .engt-card:hover {
-  transform: translateY(-4px) scale(1.025) !important;
+  
 
   border-color: #000000 !important;
   background-color: #ffffff !important;
@@ -1097,8 +1097,8 @@ img.upgrad-launcher-image {
 .engt-msg-carousel:has(.engt-card:hover) .engt-card:not(:hover),
 .engt-carousel:has(.engt-card:hover) .engt-card:not(:hover),
 [class*="carousel"]:has(.engt-card:hover) .engt-card:not(:hover) {
-  opacity: 0.72 !important;
-  transform: scale(0.98) !important;
+  
+  
 }
 
 /* Keep content sharp and readable */
@@ -1793,4 +1793,39 @@ img.upgrad-launcher-image {
 
   border-radius: 50% !important;
   transform: none !important;
+}
+/* =====================================================
+   CAROUSEL HOVER — NO FLICKER
+   ===================================================== */
+
+.engt-carousel-wrapper .engt-card,
+.engt-msg-carousel .engt-card,
+.engt-carousel .engt-card {
+  position: relative !important;
+
+  transform: none !important;
+  opacity: 1 !important;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease !important;
+}
+
+.engt-carousel-wrapper
+.engt-card.upgrad-carousel-hovered,
+.engt-msg-carousel
+.engt-card.upgrad-carousel-hovered,
+.engt-carousel
+.engt-card.upgrad-carousel-hovered {
+  transform: none !important;
+  opacity: 1 !important;
+
+  background: #ffffff !important;
+  border-color: #111111 !important;
+
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.14) !important;
+
+  z-index: 4 !important;
 }
