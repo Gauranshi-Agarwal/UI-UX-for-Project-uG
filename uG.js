@@ -152,68 +152,39 @@
 /* ~ BOT AVATAR */
 
 /* =====================================================
-
    UPGRAD LAUNCHER, CALLOUT AND INACTIVITY OPENING
-
    ===================================================== */
-
- 
-
 (function () {
 
   "use strict";
 
- 
-
   const CONFIG = {
-
     launcherImageUrl:
 
       "https://fpu.branding-element.com/prod/88870/INLINE_IMAGE/147645_15072026_073714_Screenshot_2026_07_15_at_1.07.03_PM.png-0atgo.png",
 
- 
-
     calloutHeading: "Chat with us.",
-
     calloutText: "Get Instant Help!",
 
- 
-
     /* Show callout after 2 seconds */
-
     calloutDelayMs: 2000,
 
- 
 
     /* First automatic opening after 30 seconds */
 
     firstAutoOpenDelayMs: 30000,
 
- 
-
     /* Reopen after 20 seconds following a user close */
 
     reopenAfterCloseDelayMs: 20000
-
   };
-
- 
-
   let calloutTimer = 0;
-
   let inactivityTimer = 0;
-
   let mouseMoveTimer = 0;
 
- 
-
   let userClosedChat = false;
-
   let lastActivityTime = Date.now();
-
   let activityListenersAdded = false;
-
- 
 
   function getNativeLauncher() {
 
@@ -226,21 +197,13 @@
     );
 
   }
-
- 
-
   function getLauncherContainer() {
 
     return document.querySelector(
-
       ".engt-launch-icon-box"
-
     );
-
   }
-
  
-
   function getPopup() {
 
     return (
@@ -254,10 +217,7 @@
       document.querySelector(".engt-chat-screen")
 
     );
-
   }
-
- 
 
   function isElementVisible(element) {
 
@@ -1770,327 +1730,8 @@
 })();
 
 /* ~ EXIT INTENT - OPEN CHATBOT EVERY TIME */
-/* =====================================================
-   CAROUSEL HOVER - SLIDE EXACTLY ONE CARD
-   Direct track movement, no button triggering
-   Desktop only
-   ===================================================== */
 
-(function () {
-  "use strict";
-
-  const HOVER_DELAY = 350;
-  const SLIDE_LOCK_TIME = 550;
-
-  let hoverTimer = 0;
-  let slideLocked = false;
-  let activeCard = null;
-
-  function isDesktopHoverDevice() {
-    return window.matchMedia(
-      "(hover: hover) and (pointer: fine)"
-    ).matches;
-  }
-
-  function isVisible(element) {
-    if (!element || !element.isConnected) {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    const rect = element.getBoundingClientRect();
-
-    return (
-      style.display !== "none" &&
-      style.visibility !== "hidden" &&
-      Number(style.opacity || 1) > 0 &&
-      rect.width > 0 &&
-      rect.height > 0
-    );
-  }
-
-  function getHoveredCard(target) {
-    if (!(target instanceof Element)) {
-      return null;
-    }
-
-    return target.closest(
-      ".engt-carousel-wrapper .engt-card, " +
-      ".engt-msg-carousel .engt-card, " +
-      ".engt-carousel .engt-card, " +
-      ".engt-carousel-wrapper .engt-carousel-card, " +
-      ".engt-msg-carousel .engt-carousel-card"
-    );
-  }
-
-  function getCarouselRoot(card) {
-    return card.closest(
-      ".engt-carousel-wrapper, " +
-      ".engt-msg-carousel, " +
-      ".engt-carousel"
-    );
-  }
-
-  function canScrollHorizontally(element) {
-    if (!element) {
-      return false;
-    }
-
-    return element.scrollWidth > element.clientWidth + 5;
-  }
-
-  function findScrollableTrack(card, carouselRoot) {
-    let current = card.parentElement;
-
-    while (current) {
-      if (canScrollHorizontally(current)) {
-        return current;
-      }
-
-      if (current === carouselRoot) {
-        break;
-      }
-
-      current = current.parentElement;
-    }
-
-    if (canScrollHorizontally(carouselRoot)) {
-      return carouselRoot;
-    }
-
-    /*
-     * Some Engati carousels place the scrolling track
-     * inside another child wrapper.
-     */
-    const possibleTracks = Array.from(
-      carouselRoot.querySelectorAll("div")
-    ).filter(function (element) {
-      return (
-        element.contains(card) &&
-        canScrollHorizontally(element)
-      );
-    });
-
-    if (!possibleTracks.length) {
-      return null;
-    }
-
-    /*
-     * Use the smallest scrollable wrapper containing the card.
-     */
-    possibleTracks.sort(function (a, b) {
-      return a.scrollWidth - b.scrollWidth;
-    });
-
-    return possibleTracks[0];
-  }
-
-  function getVisibleCards(track) {
-    return Array.from(
-      track.querySelectorAll(
-        ".engt-card, .engt-carousel-card"
-      )
-    ).filter(function (card) {
-      return isVisible(card);
-    });
-  }
-
-  function getCardStep(track, hoveredCard) {
-    const cards = getVisibleCards(track);
-
-    if (cards.length >= 2) {
-      const firstRect = cards[0].getBoundingClientRect();
-      const secondRect = cards[1].getBoundingClientRect();
-
-      const measuredStep = Math.abs(
-        secondRect.left - firstRect.left
-      );
-
-      if (measuredStep > 20) {
-        return measuredStep;
-      }
-    }
-
-    const cardRect = hoveredCard.getBoundingClientRect();
-    const cardStyle = window.getComputedStyle(hoveredCard);
-
-    const marginLeft =
-      parseFloat(cardStyle.marginLeft) || 0;
-
-    const marginRight =
-      parseFloat(cardStyle.marginRight) || 0;
-
-    return (
-      cardRect.width +
-      marginLeft +
-      marginRight
-    );
-  }
-
-  function getSlideDirection(card, track) {
-    const cardRect = card.getBoundingClientRect();
-    const trackRect = track.getBoundingClientRect();
-
-    const cardCenter =
-      cardRect.left + cardRect.width / 2;
-
-    const visibleTrackCenter =
-      trackRect.left + trackRect.width / 2;
-
-    const tolerance = Math.min(
-      30,
-      cardRect.width * 0.12
-    );
-
-    if (cardCenter > visibleTrackCenter + tolerance) {
-      return 1;
-    }
-
-    if (cardCenter < visibleTrackCenter - tolerance) {
-      return -1;
-    }
-
-    return 0;
-  }
-
-  function slideOneCard(card) {
-    if (slideLocked) {
-      return;
-    }
-
-    const carouselRoot = getCarouselRoot(card);
-
-    if (!carouselRoot) {
-      return;
-    }
-
-    const track = findScrollableTrack(
-      card,
-      carouselRoot
-    );
-
-    if (!track) {
-      console.warn(
-        "Scrollable carousel track was not found."
-      );
-      return;
-    }
-
-    const direction = getSlideDirection(
-      card,
-      track
-    );
-
-    /*
-     * The card is already in the main/center position.
-     */
-    if (direction === 0) {
-      return;
-    }
-
-    const cardStep = getCardStep(
-      track,
-      card
-    );
-
-    const maximumScroll =
-      track.scrollWidth - track.clientWidth;
-
-    const targetScroll = Math.max(
-      0,
-      Math.min(
-        maximumScroll,
-        track.scrollLeft +
-          direction * cardStep
-      )
-    );
-
-    /*
-     * Do nothing when already at the first or last card.
-     */
-    if (
-      Math.abs(targetScroll - track.scrollLeft) < 2
-    ) {
-      return;
-    }
-
-    slideLocked = true;
-
-    track.scrollTo({
-      left: targetScroll,
-      behavior: "smooth"
-    });
-
-    window.setTimeout(function () {
-      slideLocked = false;
-    }, SLIDE_LOCK_TIME);
-  }
-
-  document.addEventListener(
-    "mouseover",
-    function (event) {
-      if (!isDesktopHoverDevice()) {
-        return;
-      }
-
-      const card = getHoveredCard(event.target);
-
-      if (!card) {
-        return;
-      }
-
-      /*
-       * Ignore movement between children inside the same card.
-       */
-      if (
-        event.relatedTarget instanceof Node &&
-        card.contains(event.relatedTarget)
-      ) {
-        return;
-      }
-
-      activeCard = card;
-      window.clearTimeout(hoverTimer);
-
-      hoverTimer = window.setTimeout(function () {
-        if (activeCard === card) {
-          slideOneCard(card);
-        }
-      }, HOVER_DELAY);
-    },
-    true
-  );
-
-  document.addEventListener(
-    "mouseout",
-    function (event) {
-      const card = getHoveredCard(event.target);
-
-      if (!card) {
-        return;
-      }
-
-      /*
-       * Do not cancel when moving between elements
-       * inside the same card.
-       */
-      if (
-        event.relatedTarget instanceof Node &&
-        card.contains(event.relatedTarget)
-      ) {
-        return;
-      }
-
-      if (activeCard === card) {
-        activeCard = null;
-        window.clearTimeout(hoverTimer);
-      }
-    },
-    true
-  );
-})();
-
-/* ~ CAROUSEL HOVER - SLIDE EXACTLY ONE CARD */
+ 
 /* =====================================================
    MOBILE-ONLY LAUNCHER IMAGE
    Desktop launcher remains unchanged
