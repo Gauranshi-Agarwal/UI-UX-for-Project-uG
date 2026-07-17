@@ -1756,3 +1756,41 @@ img.upgrad-launcher-image {
   font-size: 12px !important;
   line-height: 1.15 !important;
 }
+/* =====================================================
+   CAROUSEL ACTIVE BAR TO DOT — SAFE FIX
+   ===================================================== */
+
+/* Keep all normal dots unchanged */
+.engt-carousel-wrapper [class*="dot"],
+.engt-msg-carousel [class*="dot"] {
+  flex-shrink: 0 !important;
+}
+
+/* Change only the active indicator into a circular dot */
+.engt-carousel-wrapper [class*="dot"][class*="active"],
+.engt-msg-carousel [class*="dot"][class*="active"],
+.engt-carousel-wrapper [class*="indicator"][class*="active"],
+.engt-msg-carousel [class*="indicator"][class*="active"],
+.engt-carousel-wrapper .swiper-pagination-bullet-active,
+.engt-msg-carousel .swiper-pagination-bullet-active,
+.engt-carousel-wrapper .slick-active button,
+.engt-msg-carousel .slick-active button,
+.engt-carousel-wrapper .owl-dot.active span,
+.engt-msg-carousel .owl-dot.active span {
+  width: 10px !important;
+  min-width: 10px !important;
+  max-width: 10px !important;
+
+  height: 10px !important;
+  min-height: 10px !important;
+  max-height: 10px !important;
+
+  flex: 0 0 10px !important;
+
+  padding: 0 !important;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+
+  border-radius: 50% !important;
+  transform: none !important;
+}
