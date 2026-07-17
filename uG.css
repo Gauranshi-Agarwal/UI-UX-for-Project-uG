@@ -1730,41 +1730,6 @@ img.upgrad-launcher-image {
   border-radius: 50% !important;
   transform: none !important;
 }
-/* =====================================================
-   CAROUSEL HOVER — NO FLICKER
-   ===================================================== */
-
-.engt-carousel-wrapper .engt-card,
-.engt-msg-carousel .engt-card,
-.engt-carousel .engt-card {
-  position: relative !important;
-
-  transform: none !important;
-  opacity: 1 !important;
-
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease !important;
-}
-
-.engt-carousel-wrapper
-.engt-card.upgrad-carousel-hovered,
-.engt-msg-carousel
-.engt-card.upgrad-carousel-hovered,
-.engt-carousel
-.engt-card.upgrad-carousel-hovered {
-  transform: none !important;
-  opacity: 1 !important;
-
-  background: #ffffff !important;
-  border-color: #111111 !important;
-
-  box-shadow:
-    0 7px 18px rgba(0, 0, 0, 0.14) !important;
-
-  z-index: 4 !important;
-}
 
 /* =====================================================
    ABSOLUTE FINAL SMO BUTTON SIZE
@@ -1886,74 +1851,4 @@ img.upgrad-launcher-image {
     min-height: 58px !important;
     max-height: 58px !important;
   }
-}
-/* =====================================================
-   CAROUSEL CARD HOVER HIGHLIGHT — NO MOVEMENT
-   ===================================================== */
-
-/* Normal card state */
-.engt-carousel-wrapper .engt-card,
-.engt-msg-carousel .engt-card,
-.engt-carousel .engt-card,
-.engt-carousel-wrapper .engt-carousel-card,
-.engt-msg-carousel .engt-carousel-card,
-.engt-carousel .engt-carousel-card {
-  position: relative !important;
-
-  border: 1px solid transparent !important;
-  border-radius: 16px !important;
-
-  transform: none !important;
-  opacity: 1 !important;
-
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease !important;
-}
-
-/* Highlight only the card under the cursor */
-.engt-carousel-wrapper .engt-card:hover,
-.engt-msg-carousel .engt-card:hover,
-.engt-carousel .engt-card:hover,
-.engt-carousel-wrapper .engt-carousel-card:hover,
-.engt-msg-carousel .engt-carousel-card:hover,
-.engt-carousel .engt-carousel-card:hover {
-  background-color: #ffffff !important;
-  border-color: #111111 !important;
-
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.18) !important;
-
-  transform: none !important;
-  opacity: 1 !important;
-
-  z-index: 10 !important;
-}
-
-/* Also support the class added by your existing JavaScript */
-.engt-carousel-wrapper .upgrad-carousel-hovered,
-.engt-msg-carousel .upgrad-carousel-hovered,
-.engt-carousel .upgrad-carousel-hovered {
-  background-color: #ffffff !important;
-  border-color: #111111 !important;
-
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.18) !important;
-
-  transform: none !important;
-  opacity: 1 !important;
-
-  z-index: 10 !important;
-}
-
-/* Prevent image/content movement inside the card */
-.engt-carousel-wrapper .engt-card:hover img,
-.engt-msg-carousel .engt-card:hover img,
-.engt-carousel .engt-card:hover img,
-.engt-carousel-wrapper .engt-carousel-card:hover img,
-.engt-msg-carousel .engt-carousel-card:hover img,
-.engt-carousel .engt-carousel-card:hover img {
-  transform: none !important;
-  filter: none !important;
 }
