@@ -1057,71 +1057,7 @@ img.upgrad-launcher-image {
     max-width: 82% !important;
   }
 }
-/* =====================================================
-   CAROUSEL CARD HOVER HIGHLIGHT
-   ===================================================== */
 
-/* Default carousel card state */
-.engt-carousel-wrapper .engt-card,
-.engt-msg-carousel .engt-card,
-.engt-carousel .engt-card,
-[class*="carousel"] .engt-card {
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    border-color 0.22s ease,
-    background-color 0.22s ease !important;
-
-  transform-origin: center center !important;
-}
-
-/* Highlight the card being hovered */
-.engt-carousel-wrapper .engt-card:hover,
-.engt-msg-carousel .engt-card:hover,
-.engt-carousel .engt-card:hover,
-[class*="carousel"] .engt-card:hover {
-  
-
-  border-color: #000000 !important;
-  background-color: #ffffff !important;
-
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.18) !important;
-
-  position: relative !important;
-  z-index: 5 !important;
-}
-
-/* Slightly dim the other cards while one card is hovered */
-.engt-carousel-wrapper:has(.engt-card:hover) .engt-card:not(:hover),
-.engt-msg-carousel:has(.engt-card:hover) .engt-card:not(:hover),
-.engt-carousel:has(.engt-card:hover) .engt-card:not(:hover),
-[class*="carousel"]:has(.engt-card:hover) .engt-card:not(:hover) {
-  
-  
-}
-
-/* Keep content sharp and readable */
-.engt-carousel-wrapper .engt-card:hover img,
-.engt-msg-carousel .engt-card:hover img,
-.engt-carousel .engt-card:hover img,
-[class*="carousel"] .engt-card:hover img {
-  transform: none !important;
-  filter: none !important;
-}
-
-/* Mobile touch feedback */
-@media (max-width: 600px) {
-  .engt-carousel-wrapper .engt-card:active,
-  .engt-msg-carousel .engt-card:active,
-  .engt-carousel .engt-card:active,
-  [class*="carousel"] .engt-card:active {
-    transform: scale(0.99) !important;
-    border-color: #000000 !important;
-    box-shadow:
-      0 6px 16px rgba(0, 0, 0, 0.15) !important;
-  }
-}
 /* =====================================================
    MOBILE-ONLY LAUNCHER LOOK
    Uses the complete uploaded mobile image
@@ -1828,4 +1764,196 @@ img.upgrad-launcher-image {
     0 7px 18px rgba(0, 0, 0, 0.14) !important;
 
   z-index: 4 !important;
+}
+
+/* =====================================================
+   ABSOLUTE FINAL SMO BUTTON SIZE
+   Wider buttons + identical fixed height
+   KEEP THIS AT THE VERY END OF THE CSS FILE
+   ===================================================== */
+
+/* Expand the complete two-column button area */
+.engt-msg-container.upgrad-smo-host
+.engt-msg-smo.upgrad-smo-processed
+.upgrad-smo-shell
+.upgrad-smo-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+  width: calc(100% + 76px) !important;
+  min-width: calc(100% + 76px) !important;
+  max-width: none !important;
+
+  margin-left: -54px !important;
+  margin-right: 0 !important;
+  padding: 0 2px !important;
+
+  column-gap: 12px !important;
+  row-gap: 12px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* Force every button—including the fourth—to one fixed height */
+.engt-msg-container.upgrad-smo-host
+.upgrad-smo-grid
+> button.upgrad-smo-button,
+.engt-msg-container.upgrad-smo-host
+.upgrad-smo-grid
+> button.upgrad-smo-button:nth-child(4) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+
+  height: 58px !important;
+  min-height: 58px !important;
+  max-height: 58px !important;
+
+  margin: 0 !important;
+  padding: 8px 16px !important;
+
+  border-radius: 29px !important;
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+}
+
+/* Keep labels centred vertically */
+.engt-msg-container.upgrad-smo-host
+.upgrad-smo-button
+.upgrad-smo-label {
+  display: flex !important;
+  align-items: center !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  margin: 0 !important;
+  line-height: 1.15 !important;
+}
+
+/* Mobile and tablet chat window */
+@media only screen and (max-width: 768px) {
+  .engt-msg-container.upgrad-smo-host
+  .engt-msg-smo.upgrad-smo-processed
+  .upgrad-smo-shell
+  .upgrad-smo-grid {
+    width: calc(100% + 82px) !important;
+    min-width: calc(100% + 82px) !important;
+    max-width: none !important;
+
+    margin-left: -58px !important;
+    padding: 0 2px !important;
+
+    column-gap: 12px !important;
+    row-gap: 12px !important;
+  }
+
+  .engt-msg-container.upgrad-smo-host
+  .upgrad-smo-grid
+  > button.upgrad-smo-button,
+  .engt-msg-container.upgrad-smo-host
+  .upgrad-smo-grid
+  > button.upgrad-smo-button:nth-child(4) {
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+
+    padding: 7px 15px !important;
+    border-radius: 29px !important;
+  }
+}
+
+/* Keep two columns even on narrow screens */
+@media only screen and (max-width: 360px) {
+  .engt-msg-container.upgrad-smo-host
+  .upgrad-smo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .engt-msg-container.upgrad-smo-host
+  .upgrad-smo-grid
+  > button.upgrad-smo-button,
+  .engt-msg-container.upgrad-smo-host
+  .upgrad-smo-grid
+  > button.upgrad-smo-button:nth-child(4) {
+    height: 58px !important;
+    min-height: 58px !important;
+    max-height: 58px !important;
+  }
+}
+/* =====================================================
+   CAROUSEL CARD HOVER HIGHLIGHT — NO MOVEMENT
+   ===================================================== */
+
+/* Normal card state */
+.engt-carousel-wrapper .engt-card,
+.engt-msg-carousel .engt-card,
+.engt-carousel .engt-card,
+.engt-carousel-wrapper .engt-carousel-card,
+.engt-msg-carousel .engt-carousel-card,
+.engt-carousel .engt-carousel-card {
+  position: relative !important;
+
+  border: 1px solid transparent !important;
+  border-radius: 16px !important;
+
+  transform: none !important;
+  opacity: 1 !important;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease !important;
+}
+
+/* Highlight only the card under the cursor */
+.engt-carousel-wrapper .engt-card:hover,
+.engt-msg-carousel .engt-card:hover,
+.engt-carousel .engt-card:hover,
+.engt-carousel-wrapper .engt-carousel-card:hover,
+.engt-msg-carousel .engt-carousel-card:hover,
+.engt-carousel .engt-carousel-card:hover {
+  background-color: #ffffff !important;
+  border-color: #111111 !important;
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18) !important;
+
+  transform: none !important;
+  opacity: 1 !important;
+
+  z-index: 10 !important;
+}
+
+/* Also support the class added by your existing JavaScript */
+.engt-carousel-wrapper .upgrad-carousel-hovered,
+.engt-msg-carousel .upgrad-carousel-hovered,
+.engt-carousel .upgrad-carousel-hovered {
+  background-color: #ffffff !important;
+  border-color: #111111 !important;
+
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.18) !important;
+
+  transform: none !important;
+  opacity: 1 !important;
+
+  z-index: 10 !important;
+}
+
+/* Prevent image/content movement inside the card */
+.engt-carousel-wrapper .engt-card:hover img,
+.engt-msg-carousel .engt-card:hover img,
+.engt-carousel .engt-card:hover img,
+.engt-carousel-wrapper .engt-carousel-card:hover img,
+.engt-msg-carousel .engt-carousel-card:hover img,
+.engt-carousel .engt-carousel-card:hover img {
+  transform: none !important;
+  filter: none !important;
 }
