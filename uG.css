@@ -1913,3 +1913,39 @@ img.upgrad-launcher-image {
     border-radius: 23px !important;
   }
 }
+/* =========================================================
+   SMO doodle icon styling
+   Paste at the END of your custom CSS.
+   ========================================================= */
+
+.upgrad-smo-with-doodle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  text-align: left !important;
+}
+
+.upgrad-smo-doodle {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  flex: 0 0 28px !important;
+  object-fit: contain !important;
+  display: block !important;
+  pointer-events: none !important;
+}
+
+/* Slightly smaller icons on narrow mobile screens */
+@media (max-width: 600px) {
+  .upgrad-smo-with-doodle {
+    gap: 8px !important;
+  }
+
+  .upgrad-smo-doodle {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    flex-basis: 24px !important;
+  }
+}
