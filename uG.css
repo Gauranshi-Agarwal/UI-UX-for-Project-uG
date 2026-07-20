@@ -1949,3 +1949,40 @@ img.upgrad-launcher-image {
     flex-basis: 24px !important;
   }
 }
+/* =====================================================
+   RESTORE LINE BREAKS IN SMO MESSAGE TEXT
+   ===================================================== */
+
+.upgrad-smo-prompt {
+  white-space: pre-wrap !important;
+  line-height: 1.45 !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* Engati may generate each line as a div or paragraph */
+.upgrad-smo-prompt > div,
+.upgrad-smo-prompt p {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 8px 0 !important;
+}
+
+/* Preserve explicit line breaks */
+.upgrad-smo-prompt br {
+  display: block !important;
+  content: "" !important;
+  margin-top: 7px !important;
+}
+
+/* Keep bold labels bold */
+.upgrad-smo-prompt strong,
+.upgrad-smo-prompt b {
+  font-weight: 700 !important;
+}
+
+.upgrad-smo-message-line {
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 8px !important;
+}
